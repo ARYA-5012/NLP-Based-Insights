@@ -1,0 +1,34 @@
+version: '3.8'
+
+services:
+  api:
+    build: .
+    ports:
+      - "8000:8000"
+    environment:
+      - FMP_API_KEY=${FMP_API_KEY}
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+      - CHROMA_PERSIST_DIR=/app/data/embeddings
+      - LLM_MODEL=gpt-3.5-turbo
+    volumes:
+      - chroma_data:/app/data/embeddings
+      - ./data/raw:/app/data/raw
+    restart: unless-stopped
+
+  streamlit:
+    build: .
+    command: streamlit run streamlit_demo/app.py --server.port 8501 --server.address 0.0.0.0
+    ports:
+      - "8501:8501"
+    environment:
+      - FMP_API_KEY=${FMP_API_KEY}
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+      - CHROMA_PERSIST_DIR=/app/data/embeddings
+    volumes:
+      - chroma_data:/app/data/embeddings
+    depends_on:
+      - api
+    restart: unless-stopped
+
+volumes:
+  chroma_data:
