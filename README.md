@@ -354,3 +354,11 @@ MIT — see [LICENSE](LICENSE) for details.
 ---
 
 **Built with** · Sentence Transformers · ChromaDB · BERTopic · BART · FastAPI · Streamlit · Docker · Kaggle
+
+---
+
+## 👨‍💻 Author
+
+**Arya Yadav**
+
+---
